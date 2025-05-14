@@ -14,6 +14,7 @@
                      class="form-control" 
                      id="nombre" 
                      formControlName="nombre"
+                     (input)="filtroBlanco($event)"
                      [class.is-invalid]="(nombre?.invalid && nombre?.touched) " maxlength="50">
               
               @if (nombre?.invalid && (nombre?.touched )) {
@@ -63,6 +64,7 @@
                      class="form-control" 
                      id="email" 
                      formControlName="email"
+                     (input)="filtroBlanco($event)"
                      [class.is-invalid]="(email?.invalid && email?.touched) ">
               
               @if (email?.invalid && (email?.touched )) {
@@ -82,13 +84,13 @@
               @if (creado()) {
 
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                  A simple success alert—check it out!
+                  Se agrego el usuario
                 </div>
               }
               <button type="submit" 
                       class="btn btn-primary" 
                       [disabled]="usuarioForm.invalid">
-                Enviar
+                Guardar
               </button>
             </div>
           </form>
@@ -97,3 +99,6 @@
     </div>
   </div>
 </div>
+
+
+<!-- <app-usuario-tabla></app-usuario-tabla> -->

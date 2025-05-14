@@ -3,6 +3,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UsuarioDto } from '../../modelos/usuario.dto';
 import { UsuarioServicesService } from '../../servicios/usuario-services.service';
+import { UsuarioTablaComponent } from '../../tablas/usuario-tabla/usuario-tabla.component';
 
 @Component({
   selector: 'app-usuario',
@@ -27,8 +28,6 @@ export class UsuarioComponent {
   enviar() {
     
     if (this.usuarioForm.valid) {
-      console.log('Formulario válido:', this.usuarioForm.value);
-      // Aquí puedes enviar los datos a tu API
       let usuario:UsuarioDto = this.usuarioForm.value;
       debugger
       this.usuarioService.enviarFormulario(usuario).subscribe(
@@ -36,7 +35,7 @@ export class UsuarioComponent {
           this.creado.set(true);
           this.usuarioForm.reset();
           this.usuarioForm.clearValidators();
-          
+          this.ocultaAlerta();
         }
       );
     }
@@ -58,6 +57,28 @@ export class UsuarioComponent {
     if (!filtro.includes(event.key)) {
       event.preventDefault();
     }
+  }
+
+  // filtroBlanco(event: KeyboardEvent) {
+  //   if (event.key === ' ') {
+  //     event.preventDefault();
+  //   }
+  // }
+
+  filtroBlanco(event: Event) {
+    const input = event.target as HTMLInputElement;
+    let value = input.value;
+    
+    // Eliminar espacios al principio
+    if (value.startsWith(' ')) {
+      value = value.trimStart();
+    }
+    
+    // Reemplazar más de 2 espacios consecutivos por 2 espacios
+    value = value.replace(/\s{3,}/g, '  ');
+    
+    input.value = value;
+    this.usuarioForm.get("nombre")?.setValue(value);
   }
 
   get nombre() {

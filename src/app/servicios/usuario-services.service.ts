@@ -19,4 +19,9 @@ export class UsuarioServicesService {
     return this.http.post<UsuarioDto>(getUrl,usuario);
   }
 
+  recuperarUsuarios(): Observable<any>{
+    let getUrl:string = this.url+'/recuperarTodo';
+    return this.http.get<UsuarioDto[]>(getUrl);
+  }
+
 }
