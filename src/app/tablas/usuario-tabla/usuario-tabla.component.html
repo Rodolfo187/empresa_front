@@ -1,0 +1,70 @@
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Edad</th>
+      <th scope="col">Email</th>
+      <th scope="col">Accion</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (usu of usuarios; track $index) {
+            <tr>
+              <td>{{ usu.id }}</td>
+              <td>{{ usu.nombre }}</td>
+              <td>{{ usu.edad }}</td>
+              <td>{{ usu.email }}</td>
+              <td>
+                    <button 
+                    type="button" 
+                    class="btn btn-primary btn-sm" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#usuarioModal"
+                    (click)="abrirModal(usu)">
+                    <i class="bi bi-eye-fill"></i> Revisar
+                    </button>
+                </td>
+            </tr>
+            
+    }
+
+  </tbody>
+  </table>
+</div>
+
+<div class="modal fade" id="usuarioModal" tabindex="-1" aria-labelledby="tipoLetra" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="tipoLetra">Usuario</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        @if (usuarioSeleccionando) {
+
+            <div class="modal-body">
+              <div class="row mb-3">
+                <div class="col-md-4 fw-bold">ID:</div>
+                <div class="col-md-8">{{ usuarioSeleccionando.id }}</div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-4 fw-bold">Nombre:</div>
+                <div class="col-md-8">{{ usuarioSeleccionando.nombre }}</div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-4 fw-bold">Edad:</div>
+                <div class="col-md-8">{{ usuarioSeleccionando.edad }}</div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-4 fw-bold">Email:</div>
+                <div class="col-md-8">{{ usuarioSeleccionando.email }}</div>
+              </div>
+            </div>
+        }
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>

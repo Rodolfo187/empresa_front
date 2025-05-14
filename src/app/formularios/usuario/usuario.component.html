@@ -1,0 +1,104 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h3 class="mb-0">Registro de Usuario</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="usuarioForm" (ngSubmit)="enviar()" >
+            <!-- Campo Nombre -->
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" 
+                     class="form-control" 
+                     id="nombre" 
+                     formControlName="nombre"
+                     (input)="filtroBlanco($event)"
+                     [class.is-invalid]="(nombre?.invalid && nombre?.touched) " maxlength="50">
+              
+              @if (nombre?.invalid && (nombre?.touched )) {
+                <div class="invalid-feedback">
+                  @if (nombre?.errors?.['required']) {
+                    <div>El nombre es requerido</div>
+                  }
+                  @if (nombre?.errors?.['minlength']) {
+                    <div>Mínimo 1 caracteres</div>
+                  }
+                </div>
+              }
+            </div>
+
+
+            <!-- Campo Edad -->
+            <div class="mb-3">
+              <label for="edad" class="form-label">Edad</label>
+              <input type="number" 
+                     class="form-control" 
+                     id="edad" 
+                     formControlName="edad"
+                     [class.is-invalid]="(edad?.invalid && edad?.touched) "
+                     min="1"
+                     max="99"
+                     (keydown)="filtroBloqueador($event)">
+              
+              @if (edad?.invalid && (edad?.touched )) {
+                <div class="invalid-feedback">
+                  @if (edad?.errors?.['required']) {
+                    <div>La edad es requerida</div>
+                  }
+                  @if (edad?.errors?.['min']) {
+                    <div>No puede ser menor a 1</div>
+                  }
+                  @if (edad?.errors?.['max']) {
+                    <div>No puede ser mayor a 100</div>
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Campo Email -->
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" 
+                     class="form-control" 
+                     id="email" 
+                     formControlName="email"
+                     (input)="filtroBlanco($event)"
+                     [class.is-invalid]="(email?.invalid && email?.touched) ">
+              
+              @if (email?.invalid && (email?.touched )) {
+                <div class="invalid-feedback">
+                  @if (email?.errors?.['required']) {
+                    <div>El email es requerido</div>
+                  }
+                  @if (email?.errors?.['email']) {
+                    <div>Ingrese un email válido</div>
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Botón Submit -->
+            <div class="d-grid gap-2">
+              @if (creado()) {
+
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  Se agrego el usuario
+                </div>
+              }
+              <button type="submit" 
+                      class="btn btn-primary" 
+                      [disabled]="usuarioForm.invalid">
+                Guardar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <app-usuario-tabla></app-usuario-tabla> -->
