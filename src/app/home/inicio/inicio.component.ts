@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
   styleUrl: './inicio.component.css'
 })
 export class InicioComponent {
-  titulo = 'Buenos días';
-  mensaje = 'Que tengas un excelente día';
+  titulo = 'Ejercicio Practico';
+  mensaje = 'Rodolfo Yamaca';
   //horaActual = new Date().getHours();
 }
