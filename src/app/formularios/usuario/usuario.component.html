@@ -79,6 +79,12 @@
 
             <!-- Botón Submit -->
             <div class="d-grid gap-2">
+              @if (creado()) {
+
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  A simple success alert—check it out!
+                </div>
+              }
               <button type="submit" 
                       class="btn btn-primary" 
                       [disabled]="usuarioForm.invalid">

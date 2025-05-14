@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UsuarioDto } from '../../modelos/usuario.dto';
+import { UsuarioServicesService } from '../../servicios/usuario-services.service';
 
 @Component({
   selector: 'app-usuario',
@@ -11,7 +13,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 export class UsuarioComponent {
 
   usuarioForm: FormGroup;
-  formSubmitted = signal(false);
+  creado = signal(false);
+  private usuarioService = inject(UsuarioServicesService);
 
   constructor(private fb: FormBuilder) {
     this.usuarioForm = this.fb.group({
@@ -22,12 +25,27 @@ export class UsuarioComponent {
   }
 
   enviar() {
-    this.formSubmitted.set(true);
     
     if (this.usuarioForm.valid) {
       console.log('Formulario válido:', this.usuarioForm.value);
       // Aquí puedes enviar los datos a tu API
+      let usuario:UsuarioDto = this.usuarioForm.value;
+      debugger
+      this.usuarioService.enviarFormulario(usuario).subscribe(
+        respon =>{
+          this.creado.set(true);
+          this.usuarioForm.reset();
+          this.usuarioForm.clearValidators();
+          
+        }
+      );
     }
+  }
+
+  ocultaAlerta(){
+    setTimeout(() => {
+            this.creado.set(false);
+          }, 3000);
   }
 
   // Bloquea teclas no numéricas
