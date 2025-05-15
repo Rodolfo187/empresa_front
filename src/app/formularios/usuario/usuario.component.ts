@@ -29,7 +29,6 @@ export class UsuarioComponent {
     
     if (this.usuarioForm.valid) {
       let usuario:UsuarioDto = this.usuarioForm.value;
-      debugger
       this.usuarioService.enviarFormulario(usuario).subscribe(
         respon =>{
           this.creado.set(true);
@@ -69,6 +68,10 @@ export class UsuarioComponent {
     const input = event.target as HTMLInputElement;
     let value = input.value;
     
+    const idCampo = input.id;
+    const idCampoNombre = "nombre";
+    const idCampoEmail = "email";
+    
     // Eliminar espacios al principio
     if (value.startsWith(' ')) {
       value = value.trimStart();
@@ -78,7 +81,11 @@ export class UsuarioComponent {
     value = value.replace(/\s{3,}/g, '  ');
     
     input.value = value;
-    this.usuarioForm.get("nombre")?.setValue(value);
+    if(idCampo === idCampoNombre){
+      this.usuarioForm.get(idCampoNombre)?.setValue(value);
+    }else if(idCampo === idCampoEmail){
+      this.usuarioForm.get(idCampoEmail)?.setValue(value);
+    }
   }
 
   get nombre() {
